@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# /// /// /// #
+
 main() {
   echo -e "\nRunning env setup shell\n"
 
@@ -18,6 +20,8 @@ main() {
     exit 1
   fi
 }
+
+# /// /// /// #
 
 setup_mac() {
 
@@ -79,19 +83,18 @@ setup_mac() {
     brew install --cask visual-studio-code
   fi
 
-  if [[ ! -f "/Users/$USERNAME/Dropbox/.bash_profile" || ! -d "/Applications/Dropbox.app" ]]; then
+  if [[ ! -f "/Users/$USERNAME/Dropbox/.bash_profile_mac" || ! -d "/Applications/Dropbox.app" ]]; then
     brew install --cask dropbox
-    (sleep 5 && open "/Applications/Dropbox.app" & disown)
   fi
+  (sleep 6 && open "/Applications/Dropbox.app" & disown)
 
   if [[ -f "/Users/$USERNAME/.bash_profile" && ! -f "/Users/$USERNAME/sotaoi_removed_bash_profile.txt" ]]; then
-    mv /Users/$USERNAME/.bash_profile /Users/$USERNAME/sotaoi_removed_bash_profile.txt
+    cp /Users/$USERNAME/.bash_profile /Users/$USERNAME/sotaoi_removed_bash_profile.txt
   fi
-  rm -f /Users/$USERNAME/.bash_profile
 
-  ln -s /Users/$USERNAME/Dropbox/.bash_profile /Users/$USERNAME/.bash_profile
+  ln -sf /Users/$USERNAME/Dropbox/.bash_profile_mac /Users/$USERNAME/.bash_profile
 
-  while [ ! -f "/Users/$USERNAME/Dropbox/.bash_profile" ]
+  while [ ! -f "/Users/$USERNAME/Dropbox/.bash_profile_mac" ]
   do
     sleep 2
   done
@@ -99,6 +102,7 @@ setup_mac() {
   echo "osascript -e 'tell application \"Terminal\" to close rest of (get windows)'; osascript -e 'tell application \"Terminal\" to close first window' & (sleep 1 && open -a \"Terminal\" "$PWD") & disown" > /Users/$USERNAME/terminal_handler.sh; /bin/bash /Users/$USERNAME/terminal_handler.sh; rm -f /Users/$USERNAME/terminal_handler.sh;
   
 }
+
 homebrew_has_installed() {
   if [[ $(which brew) == "" ]]; then
     echo "no"
@@ -113,6 +117,8 @@ homebrew_has_installed() {
   fi
 }
 
+# /// /// /// #
+
 setup_debian() {
 
   if [[ "a" == "b" ]]; then
@@ -120,5 +126,7 @@ setup_debian() {
   fi
   
 }
+
+# /// /// /// #
 
 main $@
