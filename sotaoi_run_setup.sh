@@ -35,12 +35,19 @@ setup_mac() {
     return 0
   fi
 
+  killall "System Preferences"
+  open "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
+
   echo -e "$SUPER_PASS\n" | sudo -S chsh -s /bin/bash
   sudo chsh -s /bin/bash $USERNAME
   defaults write com.apple.Finder AppleShowAllFiles true
+  killall Finder
 
   xcode-select --install
 
+  echo -e "$SUPER_PASS\n" | sudo -S pip3 install --upgrade pip
+  pip3 install pynput
+  
   # if ! grep -q 'NODE_OPTIONS=--max_old_space_size=4096' "/Users/$USERNAME/.bash_profile"; then
   #   echo 'export NODE_OPTIONS=--max_old_space_size=4096' >> /Users/$USERNAME/.bash_profile
   # fi
@@ -49,7 +56,7 @@ setup_mac() {
     /bin/bash -c "/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)""
   fi
 
-  if [[ "$(homebrew_has_installed 'coreutils')" != "yes" ]]; then
+  if [[ "$(homebrew_has_formula_installed 'coreutils')" != "yes" ]]; then
     brew install coreutils
   fi
   if [[ $(which wget) == "" ]]; then
@@ -59,7 +66,7 @@ setup_mac() {
   if [[ $(which git) == "" ]]; then
     brew install git
   fi
-  if [[ "$(homebrew_has_installed 'git-gui')" != "yes" ]]; then
+  if [[ "$(homebrew_has_formula_installed 'git-gui')" != "yes" ]]; then
     brew install git-gui
   fi
   
@@ -94,6 +101,8 @@ setup_mac() {
 
   ln -sf /Users/$USERNAME/Dropbox/.bash_profile_mac /Users/$USERNAME/.bash_profile
 
+  echo "Waiting for Dropbox installation to continue..."
+
   while [ ! -f "/Users/$USERNAME/Dropbox/.bash_profile_mac" ]
   do
     sleep 2
@@ -103,12 +112,26 @@ setup_mac() {
   
 }
 
-homebrew_has_installed() {
+homebrew_has_formula_installed() {
   if [[ $(which brew) == "" ]]; then
     echo "no"
     return 0
   fi
   if brew list $1 &>/dev/null; then
+    echo "yes"
+    return 0
+  else
+    echo "no"
+    return 0
+  fi
+}
+
+homebrew_has_cask_installed() {
+  if [[ $(which brew) == "" ]]; then
+    echo "no"
+    return 0
+  fi
+  if brew list --cask $1 &>/dev/null; then
     echo "yes"
     return 0
   else
