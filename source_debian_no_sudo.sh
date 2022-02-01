@@ -13,9 +13,9 @@ COMMENT
 
 # systemctl disable apache2 && systemctl stop apache2
 
-DEBIAN_FRONTEND=noninteractive apt -y update
-DEBIAN_FRONTEND=noninteractive apt install -y nano git curl zip unzip
-DEBIAN_FRONTEND=noninteractive apt autoremove -y vim
+# DEBIAN_FRONTEND=noninteractive apt -y update
+# DEBIAN_FRONTEND=noninteractive apt install -y nano git curl zip unzip
+# DEBIAN_FRONTEND=noninteractive apt autoremove -y vim
 
 echo "" >> ~/.bashrc
 echo "parse_git_branch() {" >> ~/.bashrc
