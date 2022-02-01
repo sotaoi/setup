@@ -18,4 +18,4 @@ cd ~/ && wget -O source_debian.sh https://raw.githubusercontent.com/sotaoi/setup
 
 # Source Debian no sudo (optional)
 
-cd /opt && wget -O source_debian_no_sudo_or_apt.sh https://raw.githubusercontent.com/sotaoi/setup/master/source_debian_no_sudo_or_apt.sh && source ./source_debian_no_sudo_or_apt.sh && rm -f ./source_debian_no_sudo_or_apt.sh
+cd ~/ && wget -O source_debian_no_sudo_or_apt.sh https://raw.githubusercontent.com/sotaoi/setup/master/source_debian_no_sudo_or_apt.sh && source ./source_debian_no_sudo_or_apt.sh && rm -f ./source_debian_no_sudo_or_apt.sh
