@@ -5,3 +5,13 @@
 # Debian
 
 ([ $(which wget) == "" ] && sudo DEBIAN_FRONTEND=noninteractive apt -y update && sudo DEBIAN_FRONTEND=noninteractive apt install -y wget); (wget -O ~/sotaoi_run_setup.sh https://raw.githubusercontent.com/sotaoi/setup/master/sotaoi_run_setup.sh && source ~/sotaoi_run_setup.sh && rm -f ~/sotaoi_run_setup.sh)
+
+--- --- ---
+
+# (optional) Source MacOS
+
+TODO
+
+# (optional) Source Debian
+
+wget -O source_debian.sh https://raw.githubusercontent.com/sotaoi/setup/master/source_debian.sh && source ./source_debian.sh && rm -f ./source_debian.sh

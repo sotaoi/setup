@@ -1,0 +1,180 @@
+#!/bin/bash
+
+USERNAME=$(id -P $(stat -f%Su /dev/console) | cut -d : -f 8)
+
+alias ll='gls --color -alh --group-directories-first'
+alias l='gls --color -alh --group-directories-first'
+alias ls='gls --color -alh --group-directories-first'
+
+parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
+export TK_SILENCE_DEPRECATION=1
+
+export PATH="/usr/local/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
+
+export PATH="/usr/local/sbin:$PATH"
+export PATH="$PATH:/Users/$USERNAME/Library/Android/sdk/platform-tools:/Users/$USERNAME/Library/Android/sdk/build-tools/28.0.3"
+export PATH="$PATH:~/scripts"
+export PATH="$PATH:/opt/local/bin"
+export PATH="/usr/local/opt/curl/bin:$PATH"
+
+export NODE_OPTIONS=--max_old_space_size=4096
+
+export LDFLAGS="-L/usr/local/opt/curl/lib"
+export CPPFLAGS="-I/usr/local/opt/curl/include"
+export PKG_CONFIG_PATH="/usr/local/opt/curl/lib/pkgconfig"
+
+##
+# Your previous /Users/$USERNAME/.bash_profile file was backed up as /Users/$USERNAME/.bash_profile.macports-saved_2021-03-06_at_14:50:48
+##
+
+# MacPorts Installer addition on 2021-03-06_at_14:50:48: adding an appropriate PATH variable for use with MacPorts.
+export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+# Finished adapting your PATH environment variable for use with MacPorts.
+
+alias usc='/Users/$USERNAME/docker-ubuntu/exec.sh'
+alias gusc='cd /Users/$USERNAME/docker-ubuntu'
+
+alias iwatch='sudo sysctl -w kern.maxfiles=1048576'
+
+alias npmi='npm install --no-optional --force --no-audit --no-fund  --loglevel error'
+
+alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+
+# ANDROID EMULATOR
+alias samsung_s8_api_28='/Users/$USERNAME/Library/Android/sdk/emulator/emulator -avd samsung_s8_api_28 -writable-system'
+
+export PATH="/usr/local/opt/openjdk@8/bin:$PATH"
+
+export ANDROID_SDK_ROOT="/opt/homebrew/share/android-sdk/platforms/android-30"
+
+export JAVA_HOME=/opt/homebrew/opt/openjdk@8
+
+export ANDROID_HOME='/opt/homebrew/share/android-sdk'
+
+# CREATE NEW FILE ON DESKTOP
+function new_file {
+  if [[ "$1" == "" ]]; then
+    FILENAME='new_file.txt'
+  else
+    FILENAME=$1
+  fi
+  touch /Users/$USERNAME/Desktop/$FILENAME
+}
+
+# /// /// /// #
+
+function run_mac_source() {
+  USERNAME=$(id -P $(stat -f%Su /dev/console) | cut -d : -f 8)
+
+  echo -e "Superuser \033[1mpassword\033[0m?"
+  read -s SUPER_PASS
+  
+  if [[ $(dscl . -authonly $USERNAME "$SUPER_PASS") != "" ]]; then
+    run_mac_source $@
+    return 0
+  fi
+
+  echo -e "Setting up \033[1mMac environment\033[0m..."
+
+  echo -e "$SUPER_PASS\n" | sudo -S sysctl -w kern.maxfiles=1048576
+
+  defaults write com.apple.Finder AppleShowAllFiles true
+  killall Finder
+
+  if [[ ! -d "/Applications/Xcode.app" ]]; then
+    echo -e "Installing \033[1mXCode\033[0m..."
+    echo "Actually skipping for now..."
+  fi
+
+  # while [ ! -d "/Applications/Xcode.app" ]
+  # do
+  #   sleep 2
+  # done
+
+  if [[ $(xcode-select -p 1>/dev/null;echo $?) != "0" ]]; then
+    echo -e "Installing \033[1mXCode CMD Line Tools\033[0m..."
+    xcode-select --install
+  fi
+
+  {
+    echo -e "$SUPER_PASS\n" | sudo -S xcode-select -s /Applications/Xcode.app/Contents/Developer
+  } &> /dev/null
+  
+  if [[ $(which pod) == "" ]]; then
+    echo -e "Installing \033[1mCocoaPods\033[0m..."
+    sudo gem install cocoapods
+  fi
+
+  if [[ "$(homebrew_has_formula_installed 'displayplacer')" != "yes" ]]; then
+    echo -e "Installing \033[1mDisplayPlacer\033[0m..."
+    brew tap jakehilborn/jakehilborn
+    brew install displayplacer
+  fi
+
+  if [[ "$(homebrew_has_cask_installed 'adoptopenjdk8')" != "yes" ]]; then
+    echo -e "Installing \033[1mOpen JDK 8\033[0m..."
+    brew tap adoptopenjdk/openjdk
+    brew install --cask adoptopenjdk8
+  fi
+
+  if [[ "$(homebrew_has_cask_installed 'keka')" != "yes" ]]; then
+    echo -e "Installing \033[1mKeka\033[0m..."
+    brew install --cask keka
+  fi
+
+  if [[ "$(homebrew_has_formula_installed 'mysql')" != "yes" ]]; then
+    echo -e "Installing \033[1mMySQL\033[0m..."
+    brew install mysql
+  fi
+
+  if [[ "$(homebrew_has_formula_installed 'php@7.3')" != "yes" ]]; then
+    echo -e "Installing \033[1mPHP 7.3\033[0m..."
+    brew tap shivammathur/php
+    brew install shivammathur/php/php@7.3
+    brew unlink php; brew unlink php@7.3; brew link --force --overwrite php@7.3
+  fi
+
+  if [[ $(which node) == "" ]]; then
+    echo -e "Installing \033[1mNode\033[0m..."
+    /bin/bash -c "brew install node@14; brew unlink node; brew unlink node@14; brew link --force --overwrite node@14; npm install -g --force npm@7.24.1"
+  fi
+  
+  echo -e "\n\033[1mAll Done!\033[0m\n"
+}
+
+homebrew_has_formula_installed() {
+  if [[ $(which brew) == "" ]]; then
+    echo "no"
+    return 0
+  fi
+  if brew list $1 &>/dev/null; then
+    echo "yes"
+    return 0
+  else
+    echo "no"
+    return 0
+  fi
+}
+
+homebrew_has_cask_installed() {
+  if [[ $(which brew) == "" ]]; then
+    echo "no"
+    return 0
+  fi
+  if brew list --cask $1 &>/dev/null; then
+    echo "yes"
+    return 0
+  else
+    echo "no"
+    return 0
+  fi
+}
+
+# /// /// /// #
