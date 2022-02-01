@@ -8,10 +8,14 @@
 
 --- --- ---
 
-# (optional) Source MacOS
+# Source MacOS (optional)
 
 TODO
 
-# (optional) Source Debian
+# Source Debian (optional)
 
-wget -O source_debian.sh https://raw.githubusercontent.com/sotaoi/setup/master/source_debian.sh && source ./source_debian.sh && rm -f ./source_debian.sh
+cd ~/ && wget -O source_debian.sh https://raw.githubusercontent.com/sotaoi/setup/master/source_debian.sh && source ./source_debian.sh && rm -f ./source_debian.sh
+
+# Source Debian no sudo (optional)
+
+cd ~/ && wget -O source_debian_no_sudo.sh https://raw.githubusercontent.com/sotaoi/setup/master/source_debian_no_sudo.sh && source ./source_debian_no_sudo.sh && rm -f ./source_debian_no_sudo.sh
