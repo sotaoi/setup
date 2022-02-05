@@ -35,6 +35,9 @@ setup_mac() {
     return 0
   fi
 
+  echo -e "$SUPER_PASS\n" | sudo -S apachectl -k stop
+  echo -e "$SUPER_PASS\n" | sudo -S launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist
+
   killall "System Preferences"
   open "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
 
