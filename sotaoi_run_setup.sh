@@ -35,6 +35,8 @@ setup_mac() {
     return 0
   fi
 
+  echo -e "$SUPER_PASS\n" | sudo -S spctl --master-disable
+
   echo -e "$SUPER_PASS\n" | sudo -S apachectl -k stop
   echo -e "$SUPER_PASS\n" | sudo -S launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist
 
