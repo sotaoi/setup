@@ -46,15 +46,13 @@ setup_mac() {
   echo -e "$SUPER_PASS\n" | sudo -S chsh -s /bin/bash
   sudo chsh -s /bin/bash $USERNAME
   defaults write com.apple.Finder AppleShowAllFiles true
+  defaults write -g ApplePressAndHoldEnabled -bool false
   killall Finder
 
   if [[ $(xcode-select -p 1>/dev/null;echo $?) != "0" ]]; then
     echo -e "Installing \033[1mXCode CMD Line Tools\033[0m..."
     xcode-select --install
   fi
-
-  echo -e "$SUPER_PASS\n" | sudo -S pip3 install --upgrade pip
-  pip3 install pynput
 
   if [[ $(which brew) == "" ]]; then
     /bin/bash -c "/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)""
@@ -79,13 +77,40 @@ setup_mac() {
     /bin/bash -c "brew install node@14; brew unlink node; brew unlink node@14; brew link --force --overwrite node@14; npm install -g --force npm@7.24.1"
   fi
   
+  # if [[ $(which go) == "" ]]; then
+  #   brew install go
+    
+  #   echo -e "$SUPER_PASS\n" | sudo -S mkdir -p /Users/$USERNAME/bin
+  #   echo -e "$SUPER_PASS\n" | sudo -S chmod 755 /Users/$USERNAME/bin
+  #   echo -e "$SUPER_PASS\n" | sudo -S touch /Users/$USERNAME/bin/gor
+  #   echo -e "$SUPER_PASS\n" | sudo -S chown -R $USERNAME:staff /Users/$USERNAME/bin
+  #   echo -e "$SUPER_PASS\n" | sudo -S chmod 755 /Users/$USERNAME/bin/gor
+  #   echo -e "$SUPER_PASS\n" | sudo -S echo '#!/bin/bash' > /Users/$USERNAME/bin/gor
+  #   echo -e "$SUPER_PASS\n" | sudo -S echo '' >> /Users/$USERNAME/bin/gor
+  #   echo -e "$SUPER_PASS\n" | sudo -S echo "go run \"\$@\"" >> /Users/$USERNAME/bin/gor
+  #   echo -e "$SUPER_PASS\n" | sudo -S chown -R $USERNAME:staff /Users/$USERNAME/bin/gor
+    
+  #   echo -e "$SUPER_PASS\n" | GOPATH="/Users/$USERNAME/go" sudo -S -H -u $USERNAME go get github.com/go-sql-driver/mysql
+  # fi
+  
   if [[ $(which nginx) == "" ]]; then
-    brew install nginx
+    brew install nginx; brew unlink nginx; brew link --force --overwrite nginx
   fi
   
   if [[ $(which python3) == "" ]]; then
     brew install python; brew unlink python; brew link --force --overwrite python
   fi
+
+  echo -e "$SUPER_PASS\n" | sudo -S python3 -m pip install --upgrade pip
+  python3 -m pip install pynput
+  python3 -m pip install mysql-connector-python-rf
+  python3 -m pip install pyOpenSSL
+  python3 -m pip install chardet
+  python3 -m pip install python-decouple
+  python3 -m pip install service-identity
+  python3 -m pip install django
+  python3 -m pip install requests_toolbelt
+  python3 -m pip install Jinja2
 
   # /// /// /// #
 
@@ -174,6 +199,14 @@ setup_mac() {
     brew install shivammathur/php/php@7.3
     brew unlink php; brew unlink php@7.3; brew link --force --overwrite php@7.3
   fi
+
+  # if [[ $(which unitd) == "" ]]; then
+  #   brew tap nginx/unit
+  #   brew install nginx/unit/unit
+  #   brew install nginx/unit/unit-php
+  #   brew install nginx/unit/unit-python3
+  #   brew services start unit
+  # fi
 
   # /// /// /// #
 

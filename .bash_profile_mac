@@ -86,6 +86,7 @@ function run_mac_source() {
   echo -e "$SUPER_PASS\n" | sudo -S sysctl -w kern.maxfiles=1048576
 
   defaults write com.apple.Finder AppleShowAllFiles true
+  defaults write -g ApplePressAndHoldEnabled -bool false
   killall Finder
 
   if [[ ! -d "/Applications/Xcode.app" ]]; then
