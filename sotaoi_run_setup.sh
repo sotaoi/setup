@@ -111,6 +111,9 @@ setup_mac() {
   python3 -m pip install django
   python3 -m pip install requests_toolbelt
   python3 -m pip install Jinja2
+  python3 -m pip install PyReact
+  python3 -m pip install typeguard
+  python3 -m install Twisted
 
   # /// /// /// #
 
