@@ -113,7 +113,7 @@ setup_mac() {
   python3 -m pip install Jinja2
   python3 -m pip install PyReact
   python3 -m pip install typeguard
-  python3 -m install Twisted
+  python3 -m pip install Twisted
 
   # /// /// /// #
 
