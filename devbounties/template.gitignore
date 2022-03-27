@@ -23,6 +23,6 @@ Homestead.yaml
 
 sotaoi/*
 var/archives/*
-requirements.txt
+var/sotaoi_internal/requirements.txt
 
 #
