@@ -108,7 +108,6 @@ setup_mac() {
   python3 -m pip install chardet
   python3 -m pip install python-decouple
   python3 -m pip install service-identity
-  python3 -m pip install django
   python3 -m pip install requests_toolbelt
   python3 -m pip install Jinja2
   python3 -m pip install PyReact

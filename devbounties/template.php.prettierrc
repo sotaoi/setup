@@ -5,5 +5,7 @@
   "useTabs": false,
   "tabWidth": 2,
   "braceStyle": "1tbs",
-  "trailingComma": "es5"
+  "trailingComma": "es5",
+  "trailingCommaPHP": true,
+  "phpVersion": "7.3"
 }
