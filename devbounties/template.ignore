@@ -19,5 +19,6 @@
 !sotaoi/*
 !var/archives/*
 !var/sotaoi_internal/requirements.txt
+!var/apache/*
 
 #
