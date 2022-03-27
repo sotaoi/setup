@@ -10,8 +10,8 @@ main() {
     echo -e "\nDone\n"
     exit 0
 
-  elif [[ "$OSTYPE" == "linux-gnu"* && $(which apt) != "" ]]; then
-    setup_debian $@
+  elif [[ "$OSTYPE" == "linux-gnu"* && "`grep DISTRIB_ID /etc/*-release | awk -F '=' '{print $2}'`" == "Ubuntu" ]]; then
+    setup_ubuntu $@
     echo -e "\nDone\n"
     exit 0
 
@@ -255,7 +255,7 @@ homebrew_has_cask_installed() {
 
 # /// /// /// #
 
-setup_debian() {
+setup_ubuntu() {
 
   if [[ "a" == "b" ]]; then
     echo "ok"

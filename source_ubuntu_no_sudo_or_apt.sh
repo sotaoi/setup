@@ -1,21 +1,21 @@
 #!/bin/bash
 
-# wget -O debian.sh https://raw.githubusercontent.com/sotaoi/sotaoi/master/shell/source/debian.sh && source ./debian.sh && rm -f ./debian.sh
+# wget -O ubuntu.sh https://raw.githubusercontent.com/sotaoi/sotaoi/master/shell/source/ubuntu.sh && source ./ubuntu.sh && rm -f ./ubuntu.sh
 
 <<'COMMENT'
-sudo apt autoremove -y nodejs && \
+apt autoremove -y nodejs && \
   curl -sL https://deb.nodesource.com/setup_14.x -o ./nodesource_setup.sh && \
-  sudo bash ./nodesource_setup.sh && \
+  bash ./nodesource_setup.sh && \
   rm ./nodesource_setup.sh && \
-  DEBIAN_FRONTEND=noninteractive sudo apt install -y nodejs && \
-  sudo npm install -g --force npm@7.24.1
+  DEBIAN_FRONTEND=noninteractive apt install -y nodejs && \
+  npm install -g --force npm@7.24.1
 COMMENT
 
-# sudo systemctl disable apache2 && sudo systemctl stop apache2
+# systemctl disable apache2 && systemctl stop apache2
 
-sudo DEBIAN_FRONTEND=noninteractive apt -y update
-sudo DEBIAN_FRONTEND=noninteractive apt install -y nano git curl zip unzip
-sudo DEBIAN_FRONTEND=noninteractive apt autoremove -y vim
+# DEBIAN_FRONTEND=noninteractive apt -y update
+# DEBIAN_FRONTEND=noninteractive apt install -y nano git curl zip unzip
+# DEBIAN_FRONTEND=noninteractive apt autoremove -y vim
 
 echo "" >> ~/.bashrc
 echo "parse_git_branch() {" >> ~/.bashrc
