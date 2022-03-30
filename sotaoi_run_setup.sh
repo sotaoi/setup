@@ -71,6 +71,10 @@ setup_mac() {
   if [[ "$(homebrew_has_formula_installed 'git-gui')" != "yes" ]]; then
     brew install git-gui
   fi
+
+  if [[ $(which supervisorctl) == "" ]]; then
+    brew install supervisor
+  fi
   
   if [[ $(which node) == "" ]]; then
     echo -e "Installing \033[1mNode\033[0m..."
