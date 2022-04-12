@@ -9,6 +9,7 @@
 !secrets.json
 !_ide_helper.php
 !todo.txt
+!var/todo.txt
 !Homestead.json
 !Homestead.yaml
 !.centralkeys.json
@@ -20,5 +21,6 @@
 !var/archives/*
 !var/sotaoi_internal/requirements.txt
 !var/apache/*
+package-lock.json
 
 #
