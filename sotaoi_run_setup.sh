@@ -25,7 +25,7 @@ main() {
 
 setup_mac() {
 
-  USERNAME=$(id -P $(stat -f%Su /dev/console) | cut -d : -f 8)
+  USERNAME=$(id -un $(stat -f%Su /dev/console) | cut -d : -f 8)
 
   echo "Superuser password?"
   read -s SUPER_PASS

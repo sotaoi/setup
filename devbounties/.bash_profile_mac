@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USERNAME=$(id -P $(stat -f%Su /dev/console) | cut -d : -f 8)
+USERNAME=$(id -un $(stat -f%Su /dev/console) | cut -d : -f 8)
 
 alias ll='gls --color -alh --group-directories-first'
 alias l='gls --color -alh --group-directories-first'
@@ -71,7 +71,7 @@ function new_file {
 # /// /// /// #
 
 function run_mac_source() {
-  USERNAME=$(id -P $(stat -f%Su /dev/console) | cut -d : -f 8)
+  USERNAME=$(id -un $(stat -f%Su /dev/console) | cut -d : -f 8)
 
   echo -e "Superuser \033[1mpassword\033[0m?"
   read -s SUPER_PASS
